@@ -139,6 +139,22 @@
                 alert("Token dispersal failed: " + error.message);
             }
         }
+
+        document.getElementById('recipientAddresses').addEventListener('input', function(e) {
+    // Get the current value of the textarea
+    var text = e.target.value;
+
+    // Split the pasted content by common delimiters and remove empty entries
+    var addresses = text.split(/[\n ,]+/).filter(Boolean);
+
+    // Join the addresses back together as a comma-separated string without spaces
+    var formattedAddresses = addresses.join(',');
+
+    // Update the textarea with the formatted addresses
+    e.target.value = formattedAddresses;
+});
+
+        
     </script>
 </body>
 </html>
