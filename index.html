@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,34 +10,47 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
+
         .greyed-out {
             opacity: 0.5;
             pointer-events: none;
         }
-        .active, .connect-btn {
+
+        .active,
+        .connect-btn {
             opacity: 1;
             pointer-events: auto;
         }
-        #walletInfo, #tokenApproval, #tokenTransfer, .connect-btn {
+
+        #walletInfo,
+        #tokenApproval,
+        #tokenTransfer,
+        .connect-btn {
             margin-top: 20px;
         }
-        input, textarea, button {
+
+        input,
+        textarea,
+        button {
             margin-top: 10px;
             padding: 10px;
             font-size: 16px;
             width: 80%;
             max-width: 500px;
         }
+
         textarea {
             resize: vertical;
             height: 100px;
         }
+
         button {
             cursor: pointer;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
 </head>
+
 <body>
     <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
 
@@ -58,20 +72,20 @@
     </div>
 
     <script>
-        const ERC20_ABI = [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+        const ERC20_ABI = [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }];
         const MagmaSender_ABI = [
-    {
-        "inputs": [
-            {"internalType": "contract IERC20", "name": "token", "type": "address"},
-            {"internalType": "address[]", "name": "recipients", "type": "address[]"},
-            {"internalType": "uint256", "name": "amount", "type": "uint256"}
-        ],
-        "name": "disperseTokens",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-];
+            {
+                "inputs": [
+                    { "internalType": "contract IERC20", "name": "token", "type": "address" },
+                    { "internalType": "address[]", "name": "recipients", "type": "address[]" },
+                    { "internalType": "uint256", "name": "amount", "type": "uint256" }
+                ],
+                "name": "disperseTokens",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
 
         const app = document.getElementById('app');
         const connectBtn = document.querySelector('.connect-btn');
@@ -140,21 +154,22 @@
             }
         }
 
-        document.getElementById('recipientAddresses').addEventListener('input', function(e) {
-    // Get the current value of the textarea
-    var text = e.target.value;
+        document.getElementById('recipientAddresses').addEventListener('input', function (e) {
+            // Get the current value of the textarea
+            var text = e.target.value;
 
-    // Split the pasted content by common delimiters and remove empty entries
-    var addresses = text.split(/[\n ,]+/).filter(Boolean);
+            // Split the pasted content by common delimiters and remove empty entries
+            var addresses = text.split(/[\n ,]+/).filter(Boolean);
 
-    // Join the addresses back together as a comma-separated string without spaces
-    var formattedAddresses = addresses.join(',');
+            // Join the addresses back together as a comma-separated string without spaces
+            var formattedAddresses = addresses.join(',');
 
-    // Update the textarea with the formatted addresses
-    e.target.value = formattedAddresses;
-});
+            // Update the textarea with the formatted addresses
+            e.target.value = formattedAddresses;
+        });
 
-        
+
     </script>
 </body>
+
 </html>
