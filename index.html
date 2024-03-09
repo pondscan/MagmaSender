@@ -74,26 +74,35 @@
             }
         }
 
-        async function approveToken() {
-            const tokenContractAddress = tokenContractAddressInput.value.trim();
-            const approvalAmount = approvalAmountInput.value.trim();
-            if (!tokenContractAddress || !approvalAmount) {
-                alert("Token contract address and approval amount are required.");
-                return;
-            }
-            try {
-                const web3 = new Web3(window.ethereum);
-                const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenContractAddress);
-                const accounts = await web3.eth.getAccounts();
-                const account = accounts[0];
-                const result = await tokenContract.methods.approve(senderContractAddress, approvalAmount).send({ from: account });
-                console.log("Token approval successful:", result);
-                alert("Token approval successful.");
-            } catch (error) {
-                console.error('Error in token approval', error);
-                alert("Token approval failed: " + error.message);
-            }
-        }
+async function approveToken() {
+    const tokenContractAddress = tokenContractAddressInput.value.trim();
+    const approvalAmount = approvalAmountInput.value.trim();
+    console.log(`Approving token: ${tokenContractAddress} with amount: ${approvalAmount}`);
+
+    if (!tokenContractAddress || !approvalAmount) {
+        alert("Token contract address and approval amount are required.");
+        return;
+    }
+
+    try {
+        const web3 = new Web3(window.ethereum);
+        const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenContractAddress);
+        const accounts = await web3.eth.getAccounts();
+        const account = accounts[0];
+
+        // Convert the amount to Wei if needed
+        const amountInWei = web3.utils.toWei(approvalAmount, 'ether');
+        console.log(`Converted amount in Wei: ${amountInWei}`);
+
+        const result = await tokenContract.methods.approve(senderContractAddress, amountInWei).send({ from: account });
+        console.log("Token approval successful:", result);
+        alert("Token approval successful.");
+    } catch (error) {
+        console.error('Error in token approval', error);
+        alert("Token approval failed: " + error.message);
+    }
+}
+
     </script>
 </body>
 </html>
