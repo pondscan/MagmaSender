@@ -99,6 +99,7 @@
                 app.classList.add('active');
                 connectBtn.classList.add('greyed-out');
                 document.getElementById('walletConnected').textContent = `Wallet Connected: ${account}`;
+                console.log('Wallet connected:', account);
             } catch (error) {
                 console.error('Error connecting to MetaMask:', error);
             }
@@ -122,6 +123,7 @@
 
                 await tokenContract.methods.approve(senderContractAddress, amountInWei).send({ from: account });
                 alert("Token approval successful.");
+                console.log('Token approval successful');
             } catch (error) {
                 console.error('Error in token approval:', error);
                 alert("Token approval failed: " + error.message);
@@ -148,6 +150,7 @@
 
                 await magmaSenderContract.methods.disperseTokens(tokenContractAddress, recipients, amountInWei).send({ from: account });
                 alert("Token dispersal successful.");
+                console.log('Token dispersal successful');
             } catch (error) {
                 console.error('Error in token dispersal:', error);
                 alert("Token dispersal failed: " + error.message);
@@ -166,6 +169,7 @@
 
             // Update the textarea with the formatted addresses
             e.target.value = formattedAddresses;
+            console.log('Recipient addresses updated:', formattedAddresses);
         });
 
 
