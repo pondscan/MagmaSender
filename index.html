@@ -39,6 +39,12 @@
             max-width: 500px;
         }
 
+        #ascii-art-container {
+            width: 100%; /* Set the width to 100% of the viewport */
+            max-width: 800px; /* Set a maximum width for the ASCII art container */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+        
         textarea {
             resize: vertical;
             height: 100px;
@@ -55,7 +61,7 @@
 </head>
 
 <body>
-
+<div id="ascii-art-container">
 <pre class="ascii-art">
 ███    ███  █████   ██████  ███    ███  █████  ███████ ███████ ███    ██ ██████  ███████ ██████
 ████  ████ ██   ██ ██       ████  ████ ██   ██ ██      ██      ████   ██ ██   ██ ██      ██   ██
@@ -63,7 +69,7 @@
 ██  ██  ██ ██   ██ ██    ██ ██  ██  ██ ██   ██      ██ ██      ██  ██ ██ ██   ██ ██      ██   ██
 ██      ██ ██   ██  ██████  ██      ██ ██   ██ ███████ ███████ ██   ████ ██████  ███████ ██   ██                                      
 </pre>
-    
+</div>    
     <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
 
     <div id="app" class="greyed-out">
