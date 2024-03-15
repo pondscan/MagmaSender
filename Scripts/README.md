@@ -64,6 +64,7 @@ Once the script has successfully fetched all addresses, it will automatically re
 
 ```sh
 node fetchAddresses.js
+```
 
 ### Contributing
 
