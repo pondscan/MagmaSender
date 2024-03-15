@@ -1,101 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MagmaSender App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #EA462B; /* Main BG color */
+            color: #000; /* Text color */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
             text-align: center;
         }
 
+        .app-title {
+            font-size: 32px;
+            color: #FFA500; /* Orange color for the title */
+            margin-bottom: 10px;
+        }
+
+        .app-subtitle {
+            font-size: 20px;
+            color: #000; /* Black color for the subtitle */
+            margin-bottom: 30px;
+        }
+
+        input, textarea, button {
+            margin-top: 10px;
+            padding: 12px;
+            font-size: 16px;
+            width: 90%;
+            border: 2px solid #FFA500; /* Orange border */
+            border-radius: 5px; /* Rounded corners */
+            box-sizing: border-box; /* Better width management */
+            background-color: #FFF3E0; /* Light orange background */
+            color: #000; /* Black text */
+        }
+
+        button {
+            background-color: #FFA500; /* Orange background for buttons */
+            color: #000; /* Black text for buttons */
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
         .greyed-out {
-            opacity: 0.5;
+            opacity: 0.6;
             pointer-events: none;
         }
 
-        .active,
-        .connect-btn {
+        .active, .connect-btn {
             opacity: 1;
             pointer-events: auto;
         }
 
-        #walletInfo,
-        #tokenApproval,
-        #tokenTransfer,
-        .connect-btn {
+        #walletInfo, #tokenApproval, #tokenTransfer, .connect-btn {
             margin-top: 20px;
-        }
-
-        input,
-        textarea,
-        button {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        #ascii-art-container {
-            width: 100%; /* Set the width to 100% of the viewport */
-            max-width: 425px; /* Set a maximum width for the ASCII art container */
-            margin: 0 auto; /* Center the container horizontally */
-        }
-        
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-
-        button {
-            cursor: pointer;
-        }
-        pre.ascii-art {
-            font-family: monospace; /* Use a monospaced font for ASCII art */
-            font-size: 0.1em; /* Adjust the font size as needed */
-            white-space: pre; /* Preserve whitespace and line breaks */
-            margin: 0; /* Remove default margins */
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
 </head>
-
 <body>
-<div id="ascii-art-container">
-<pre class="ascii-art">
-███    ███  █████   ██████  ███    ███  █████  ███████ ███████ ███    ██ ██████  ███████ ██████
-████  ████ ██   ██ ██       ████  ████ ██   ██ ██      ██      ████   ██ ██   ██ ██      ██   ██
-██ ████ ██ ███████ ██   ███ ██ ████ ██ ███████ ███████ █████   ██ ██  ██ ██   ██ █████   ██████
-██  ██  ██ ██   ██ ██    ██ ██  ██  ██ ██   ██      ██ ██      ██  ██ ██ ██   ██ ██      ██   ██
-██      ██ ██   ██  ██████  ██      ██ ██   ██ ███████ ███████ ██   ████ ██████  ███████ ██   ██                                      
-</pre>
-</div>    
-    <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+    <div class="container">
+        <div class="app-title">MagmaSender</div>
+        <div class="app-subtitle">Magma Testnet: ERC20 Token Multisender</div>
 
-    <div id="app" class="greyed-out">
-        <div id="walletInfo">
-            <p id="walletConnected">Wallet Connected: <span id="userAddress">No</span></p>
-        </div>
-        <div id="tokenApproval">
-            <input type="text" id="tokenContractAddress" placeholder="Token Contract Address">
-            <input type="number" id="approvalAmount" placeholder="Approval Amount">
-            <button onclick="approveToken()">Approve Token</button>
-        </div>
-        <div id="tokenTransfer">
-            <input type="text" id="disperseTokenContractAddress" placeholder="Token Contract Address for Dispersal">
-            <textarea id="recipientAddresses" placeholder="Recipient Addresses (comma-separated)"></textarea>
-            <input type="number" id="disperseAmount" placeholder="Amount per Recipient">
-            <button onclick="disperseTokens()">Disperse Tokens</button>
+        <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+
+        <div id="app" class="greyed-out">
+            <div id="walletInfo">
+                <p id="walletConnected">Wallet Connected: <span id="userAddress">No</span></p>
+            </div>
+            <div id="tokenApproval">
+                <input type="text" id="tokenContractAddress" placeholder="Token Contract Address">
+                <input type="number" id="approvalAmount" placeholder="Approval Amount">
+                <button onclick="approveToken()">Approve Token</button>
+            </div>
+            <div id="tokenTransfer">
+                <input type="text" id="disperseTokenContractAddress" placeholder="Token Contract Address for Dispersal">
+                <textarea id="recipientAddresses" placeholder="Recipient Addresses (comma-separated)"></textarea>
+                <input type="number" id="disperseAmount" placeholder="Amount per Recipient">
+                <button onclick="disperseTokens()">Disperse Tokens</button>
+            </div>
         </div>
     </div>
-<div id="ascii-art-container">
-<pre class="ascii-art">
-    by @pondscan | tip jar: pondexplorer.eth
-</pre>
-</div>   
     <script>
         const ERC20_ABI = [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }];
         const MagmaSender_ABI = [
