@@ -56,6 +56,7 @@ In case the script is interrupted, you can resume the fetching process without s
 
 ```sh
 node fetchAddresses.js
+```
 
 ### Cleaning Up
 
