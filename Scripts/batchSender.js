@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const web3 = new Web3('https://turbo.magma-rpc.com/');
 
 // Set up your account using the private key
-const account = web3.eth.accounts.privateKeyToAccount('YOUR_PRIVATE_KEY'); // Replace with your wallet seed
+const account = web3.eth.accounts.privateKeyToAccount('YOUR_PRIVATE_KEY'); // Replace with your private, WARNING: ONLY USE THIS LOCALLY!
 web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 
