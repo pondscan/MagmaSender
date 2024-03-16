@@ -10,7 +10,7 @@ web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 
 // Contract addresses and ABI
-const tokenContractAddress = 'YOUR_TOKEN_ADDRESS';
+const tokenContractAddress = 'YOUR_TOKEN_ADDRESS'; // Replace with the token you wish to airdrop
 const magmaSenderContractAddress = '0xc10685ff28e298e72ce3cc7c7ef3306de685326a'; // MagmaSender Contract Address
 const magmaSenderAbi = [
     {
