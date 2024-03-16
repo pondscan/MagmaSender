@@ -22,6 +22,8 @@ Before you run this script, ensure you have the following installed:
 
 To fetch and store addresses from the Magma testnet, follow these steps:
 
+Note: For advanced users familiar with web3 js and node js, you can use batchSender.js to automate the use of MagmaSender contract for automated mass airdrops.
+
 1. **Run the Script**: Start the address fetching process by executing the script with Node.js from your terminal:
 
     ```bash
