@@ -4,10 +4,7 @@ const readline = require('readline');
 const csvFilePath = 'list.csv'; // Update this to the path of your CSV file
 const newAddressesFile = 'newAddresses.txt';
 
-// Create a read stream for the CSV file
 const readStream = fs.createReadStream(csvFilePath);
-
-// Create a write stream for the new addresses file
 const writeStream = fs.createWriteStream(newAddressesFile);
 
 const lineReader = readline.createInterface({
@@ -16,16 +13,15 @@ const lineReader = readline.createInterface({
 });
 
 lineReader.on('line', (line) => {
-    // Extract the Ethereum address from the CSV line
-    // Assuming the address is always in the first column and double-quoted
-    const match = line.match(/"([^"]+)"/);
-    if (match) {
-        const address = match[1];
-        if (address.startsWith('0x')) {
-            // Write the extracted address to the newAddresses.txt file
-            writeStream.write(address + '\n');
+    // Split the line by commas and iterate over each value
+    line.split(',').forEach(value => {
+        // Remove leading/trailing whitespace and quotes
+        const trimmedValue = value.trim().replace(/^"|"$/g, '');
+        // Validate Ethereum address (starts with 0x and is 42 characters long)
+        if (/^0x[a-fA-F0-9]{40}$/.test(trimmedValue)) {
+            writeStream.write(trimmedValue + '\n');
         }
-    }
+    });
 });
 
 lineReader.on('close', () => {
