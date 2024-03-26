@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #F8F0E3; /* Light beige background */
-            color: #333; /* Dark grey text */
+            background-color: #F8F0E3;
+            color: #333;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -20,46 +21,49 @@
             margin: 20px auto;
             padding: 20px;
             text-align: center;
-            border-radius: 10px; /* Added rounded corners for the container */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-            background-color: #FFFFFF; /* White background for the content area */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #FFFFFF;
         }
 
         .app-title {
             font-size: 32px;
-            color: #6A8D92; /* Soft blue color */
+            color: #6A8D92;
             margin-bottom: 10px;
         }
 
         .app-subtitle {
             font-size: 18px;
-            color: #94B49F; /* Soft green color */
+            color: #94B49F;
             margin-bottom: 30px;
         }
 
-        input, textarea, button {
+        input,
+        textarea,
+        button,
+        select {
             margin-top: 10px;
             padding: 12px;
             font-size: 16px;
-            width: calc(100% - 24px); /* Adjust width calculation to include padding */
-            border: 1px solid #F3B0C3; /* Soft pink border */
-            border-radius: 5px; /* Rounded corners */
+            width: calc(100% - 24px);
+            border: 1px solid #F3B0C3;
+            border-radius: 5px;
             box-sizing: border-box;
-            background-color: #FFF; /* White background for inputs */
-            color: #333; /* Dark grey text */
+            background-color: #FFF;
+            color: #333;
         }
 
         button {
-            background-color: #6A8D92; /* Soft blue background for buttons */
-            color: #FFF; /* White text for buttons */
-            font-weight: 600; /* Bold font for buttons */
+            background-color: #6A8D92;
+            color: #FFF;
+            font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #57777b; /* Darker shade of blue for button hover */
-            transform: translateY(-2px); /* Slight lift effect */
+            background-color: #57777b;
+            transform: translateY(-2px);
         }
 
         .greyed-out {
@@ -67,55 +71,79 @@
             pointer-events: none;
         }
 
-        .active, .connect-btn {
+        .active,
+        .connect-btn {
             opacity: 1;
             pointer-events: auto;
         }
 
-        #walletInfo, #tokenApproval, #tokenTransfer, .connect-btn {
+        #walletInfo,
+        #tokenApproval,
+        #tokenTransfer,
+        .connect-btn {
             margin-top: 20px;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .container {
                 margin: 10px;
                 padding: 10px;
             }
 
-            input, textarea, button {
-                width: calc(100% - 20px); /* Adjust for smaller screens */
+            input,
+            textarea,
+            button {
+                width: calc(100% - 20px);
             }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="app-title">MagmaSender</div>
-        <div class="app-subtitle">Magma Testnet: ERC20 Token Multisender</div>
+        <div class="app-subtitle">Choose between ERC20 Tokens or LAVA for mass distribution</div>
 
-        <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+        <!-- Add an ID to the button for consistent reference in the JavaScript -->
+        <button id="connect-btn" class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+
 
         <div id="app" class="greyed-out">
             <div id="walletInfo">
                 <p id="walletConnected">Wallet Connected: <span id="userAddress">No</span></p>
             </div>
-            <div id="tokenApproval">
-                <input type="text" id="tokenContractAddress" placeholder="Token Contract Address">
-                <input type="number" id="approvalAmount" placeholder="Approval Amount">
-                <button onclick="approveToken()">Approve Token</button>
+            <div id="transferSelection">
+                <select id="transferType" onchange="toggleTransferType()">
+                    <option disabled selected>Send ERC20 or LAVA?</option>
+                    <option value="erc20">ERC20 Token</option>
+                    <option value="lava">LAVA (Testnet ETH)</option>
+                </select>
+
             </div>
             <div id="tokenTransfer">
-                <input type="text" id="disperseTokenContractAddress" placeholder="Token Contract Address for Dispersal">
-                <textarea id="recipientAddresses" placeholder="Recipient Addresses (comma-separated)"></textarea>
-                <input type="number" id="disperseAmount" placeholder="Amount per Recipient">
-                <button onclick="disperseTokens()">Disperse Tokens</button>
+                <!-- Fields and buttons for ERC20 Token and LAVA transfers will be conditionally displayed based on the selection -->
             </div>
         </div>
     </div>
     <script>
-        const ERC20_ABI = [{ "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }];
+        const ERC20_ABI = [
+            {
+                "constant": false,
+                "inputs": [
+                    { "name": "_spender", "type": "address" },
+                    { "name": "_value", "type": "uint256" }
+                ],
+                "name": "approve",
+                "outputs": [
+                    { "name": "", "type": "bool" }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
         const MagmaSender_ABI = [
             {
                 "inputs": [
@@ -127,24 +155,126 @@
                 "outputs": [],
                 "stateMutability": "nonpayable",
                 "type": "function"
+            },
+            {
+                "inputs": [
+                    { "internalType": "address payable[]", "name": "recipients", "type": "address[]" },
+                    { "internalType": "uint256", "name": "amount", "type": "uint256" }
+                ],
+                "name": "disperseETH",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
             }
         ];
 
-        const app = document.getElementById('app');
-        const connectBtn = document.querySelector('.connect-btn');
-        const senderContractAddress = "0xc10685ff28e298e72ce3cc7c7ef3306de685326a"; // Replace with your MagmaSender contract address
+        const web3 = new Web3(window.ethereum);
+        let currentContractAddress = "0xc10685ff28e298e72ce3cc7c7ef3306de685326a"; // ERC20 disperse contract
+        const lavaContractAddress = "0xBcAD05222283010e34E4Aea446A98F15A525B421"; // LAVA disperse contract
 
         async function connectWallet() {
             try {
                 const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
-                app.classList.remove('greyed-out');
-                app.classList.add('active');
-                connectBtn.classList.add('greyed-out');
+                document.getElementById('app').classList.remove('greyed-out');
+                // Use getElementById with the corrected ID
+                document.getElementById('connect-btn').classList.add('greyed-out');
                 document.getElementById('walletConnected').textContent = `Wallet Connected: ${account}`;
                 console.log('Wallet connected:', account);
             } catch (error) {
                 console.error('Error connecting to MetaMask:', error);
+            }
+        }
+
+
+        function toggleTransferType() {
+            const transferType = document.getElementById('transferType').value;
+            const tokenTransferDiv = document.getElementById('tokenTransfer');
+            tokenTransferDiv.innerHTML = ''; // Clear the div for new content
+
+            if (transferType === 'erc20') {
+                // ERC20 Token transfer fields and button
+                const tokenAddressInput = createInputField('tokenContractAddress', 'Token Contract Address');
+                const approvalAmountInput = createInputField('approvalAmount', 'Approval Amount', 'number');
+                const approveButton = createButton('approveToken()', 'Approve Token');
+
+                const disperseTokenAddressInput = createInputField('disperseTokenContractAddress', 'Token Contract Address for Dispersal');
+                const recipientAddressesTextarea = createTextarea('recipientAddresses', 'Recipient Addresses (comma-separated)');
+                const disperseAmountInput = createInputField('disperseAmount', 'Amount per Recipient', 'number');
+                const disperseButton = createButton(disperseLAVA, 'Disperse LAVA');
+
+                tokenTransferDiv.appendChild(tokenAddressInput);
+                tokenTransferDiv.appendChild(approvalAmountInput);
+                tokenTransferDiv.appendChild(approveButton);
+                tokenTransferDiv.appendChild(disperseTokenAddressInput);
+                tokenTransferDiv.appendChild(recipientAddressesTextarea);
+                tokenTransferDiv.appendChild(disperseAmountInput);
+                tokenTransferDiv.appendChild(disperseButton);
+            } else if (transferType === 'lava') {
+                // LAVA transfer fields and button setup
+                const recipientAddressesTextarea = createTextarea('recipientAddresses', 'Recipient Addresses (comma-separated)');
+                const disperseAmountInput = createInputField('disperseAmount', 'Amount per Recipient (in LAVA)', 'number');
+
+                // Corrected: Pass disperseLAVA as a function reference, not a string
+                const disperseButton = createButton(disperseLAVA, 'Disperse LAVA');
+
+                tokenTransferDiv.appendChild(recipientAddressesTextarea);
+                tokenTransferDiv.appendChild(disperseAmountInput);
+                tokenTransferDiv.appendChild(disperseButton);
+            }
+
+        }
+
+        function createInputField(id, placeholder, type = 'text') {
+            const input = document.createElement('input');
+            input.type = type;
+            input.id = id;
+            input.placeholder = placeholder;
+            return input;
+        }
+
+        function createTextarea(id, placeholder) {
+            const textarea = document.createElement('textarea');
+            textarea.id = id;
+            textarea.placeholder = placeholder;
+            return textarea;
+        }
+
+        function createButton(onclickHandler, buttonText) {
+            const button = document.createElement('button');
+            button.textContent = buttonText;
+            button.addEventListener('click', onclickHandler);
+            return button;
+        }
+
+
+        // Updated disperseLAVA function
+        async function disperseLAVA() {
+            const recipientList = document.getElementById('recipientAddresses').value.trim();
+            const disperseAmount = document.getElementById('disperseAmount').value.trim();
+
+            if (!recipientList || !disperseAmount) {
+                alert("Recipient addresses and amount are required.");
+                return;
+            }
+
+            const recipients = recipientList.split(/[\s,;]+/).map(address => address.trim());
+            const amountInWei = web3.utils.toWei(disperseAmount, 'ether'); // Access web3 object globally
+
+            try {
+                const magmaSenderContract = new web3.eth.Contract(MagmaSender_ABI, lavaContractAddress);
+                const accounts = await web3.eth.getAccounts();
+                const account = accounts[0];
+
+                await magmaSenderContract.methods.disperseETH(recipients, amountInWei).send({
+                    from: account,
+                    value: amountInWei * recipients.length
+                });
+
+                alert("LAVA dispersal successful.");
+            } catch (error) {
+                console.error('Dispersal error:', error);
+                alert("Dispersal failed: " + error.message);
             }
         }
 
@@ -164,7 +294,7 @@
                 const account = accounts[0];
                 const amountInWei = web3.utils.toWei(approvalAmount, 'ether');
 
-                await tokenContract.methods.approve(senderContractAddress, amountInWei).send({ from: account });
+                await tokenContract.methods.approve(currentContractAddress, amountInWei).send({ from: account });
                 alert("Token approval successful.");
                 console.log('Token approval successful');
             } catch (error) {
@@ -173,49 +303,43 @@
             }
         }
 
+
         async function disperseTokens() {
             const tokenContractAddress = document.getElementById('disperseTokenContractAddress').value.trim();
             const recipientList = document.getElementById('recipientAddresses').value.trim();
             const disperseAmount = document.getElementById('disperseAmount').value.trim();
-            const recipients = recipientList.split(',').map(address => address.trim());
+
+            // Split recipient addresses by common delimiters and trim each address
+            const recipients = recipientList.split(/[\s,;]+/).map(address => address.trim());
+
+            // Basic validation for Ethereum addresses
+            const isAddressValid = recipients.every(address => /^0x[a-fA-F0-9]{40}$/.test(address));
+            if (!isAddressValid) {
+                alert("One or more recipient addresses are invalid.");
+                return;
+            }
 
             if (!tokenContractAddress || recipients.length === 0 || !disperseAmount) {
-                alert("Token contract address, recipient addresses, and disperse amount are required.");
+                alert("Required fields are missing.");
                 return;
             }
 
             try {
                 const web3 = new Web3(window.ethereum);
-                const magmaSenderContract = new web3.eth.Contract(MagmaSender_ABI, senderContractAddress);
+                const magmaSenderContract = new web3.eth.Contract(MagmaSender_ABI, currentContractAddress);
                 const accounts = await web3.eth.getAccounts();
                 const account = accounts[0];
                 const amountInWei = web3.utils.toWei(disperseAmount, 'ether');
 
                 await magmaSenderContract.methods.disperseTokens(tokenContractAddress, recipients, amountInWei).send({ from: account });
                 alert("Token dispersal successful.");
-                console.log('Token dispersal successful');
             } catch (error) {
-                console.error('Error in token dispersal:', error);
-                alert("Token dispersal failed: " + error.message);
+                console.error('Dispersal error:', error);
+                alert("Dispersal failed: " + error.message);
             }
         }
 
-        document.getElementById('recipientAddresses').addEventListener('input', function (e) {
-            // Get the current value of the textarea
-            var text = e.target.value;
-
-            // Split the pasted content by common delimiters and remove empty entries
-            var addresses = text.split(/[\n ,]+/).filter(Boolean);
-
-            // Join the addresses back together as a comma-separated string without spaces
-            var formattedAddresses = addresses.join(',');
-
-            // Update the textarea with the formatted addresses
-            e.target.value = formattedAddresses;
-            console.log('Recipient addresses updated:', formattedAddresses);
-        });
-
-
     </script>
 </body>
+
 </html>
