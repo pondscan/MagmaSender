@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MagmaSender App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #EA462B; /* Main BG color */
-            color: #000; /* Text color */
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F0E3; /* Light beige background */
+            color: #333; /* Dark grey text */
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -16,20 +17,23 @@
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             text-align: center;
+            border-radius: 10px; /* Added rounded corners for the container */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            background-color: #FFFFFF; /* White background for the content area */
         }
 
         .app-title {
             font-size: 32px;
-            color: #FFA500; /* Orange color for the title */
+            color: #6A8D92; /* Soft blue color */
             margin-bottom: 10px;
         }
 
         .app-subtitle {
-            font-size: 20px;
-            color: #000; /* Black color for the subtitle */
+            font-size: 18px;
+            color: #94B49F; /* Soft green color */
             margin-bottom: 30px;
         }
 
@@ -37,24 +41,24 @@
             margin-top: 10px;
             padding: 12px;
             font-size: 16px;
-            width: 90%;
-            border: 2px solid #FFA500; /* Orange border */
+            width: calc(100% - 24px); /* Adjust width calculation to include padding */
+            border: 1px solid #F3B0C3; /* Soft pink border */
             border-radius: 5px; /* Rounded corners */
-            box-sizing: border-box; /* Better width management */
-            background-color: #FFF3E0; /* Light orange background */
-            color: #000; /* Black text */
+            box-sizing: border-box;
+            background-color: #FFF; /* White background for inputs */
+            color: #333; /* Dark grey text */
         }
 
         button {
-            background-color: #FFA500; /* Orange background for buttons */
-            color: #000; /* Black text for buttons */
-            font-weight: bold;
+            background-color: #6A8D92; /* Soft blue background for buttons */
+            color: #FFF; /* White text for buttons */
+            font-weight: 600; /* Bold font for buttons */
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #FF8C00; /* Darker orange on hover */
+            background-color: #57777b; /* Darker shade of blue for button hover */
             transform: translateY(-2px); /* Slight lift effect */
         }
 
@@ -70,6 +74,18 @@
 
         #walletInfo, #tokenApproval, #tokenTransfer, .connect-btn {
             margin-top: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            input, textarea, button {
+                width: calc(100% - 20px); /* Adjust for smaller screens */
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
@@ -202,5 +218,4 @@
 
     </script>
 </body>
-
 </html>
