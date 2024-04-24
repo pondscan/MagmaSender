@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/MagmaSender/static/css/main.e6c13ad2.css",
+    "main.js": "/MagmaSender/static/js/main.ea51139d.js",
+    "static/js/453.1867a3cf.chunk.js": "/MagmaSender/static/js/453.1867a3cf.chunk.js",
+    "index.html": "/MagmaSender/index.html",
+    "main.e6c13ad2.css.map": "/MagmaSender/static/css/main.e6c13ad2.css.map",
+    "main.ea51139d.js.map": "/MagmaSender/static/js/main.ea51139d.js.map",
+    "453.1867a3cf.chunk.js.map": "/MagmaSender/static/js/453.1867a3cf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.ea51139d.js"
+  ]
+}
