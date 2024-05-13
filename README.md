@@ -30,3 +30,7 @@ function disperseTokens(IERC20 token, address[] calldata recipients, uint256 amo
         require(token.transferFrom(msg.sender, recipients[i], amount), "Token transfer failed");
     }
 }
+
+## Support
+
+Contact [@pondscan](https://x.com/pondscan) on X for support.
