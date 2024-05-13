@@ -32,6 +32,29 @@ function disperseTokens(IERC20 token, address[] calldata recipients, uint256 amo
 }
 ```
 
+And here's how you can distribute LAVA:
+
+```solidity
+function disperseLAVA(address payable[] calldata recipients, uint256 amount) external payable {
+    require(amount > 0, "Amount must be greater than 0");
+    require(recipients.length > 0, "Recipients list is empty");
+    require(msg.value == amount * recipients.length, "Sent value not correct");
+
+    for (uint256 i = 0; i < recipients.length; i++) {
+        (bool sent, ) = recipients[i].call{value: amount}("");
+        require(sent, "Failed to send LAVA");
+
+        emit LAVADispersed(recipients[i], amount);
+    }
+
+    uint256 balance = address(this).balance;
+    if (balance > 0) {
+        (bool refunded, ) = msg.sender.call{value: balance}("");
+        require(refunded, "Failed to refund LAVA");
+    }
+}
+```
+
 ## Support
 
 Contact [@pondscan](https://x.com/pondscan) on X for support.
