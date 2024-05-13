@@ -46,12 +46,6 @@ function disperseLAVA(address payable[] calldata recipients, uint256 amount) ext
 
         emit LAVADispersed(recipients[i], amount);
     }
-
-    uint256 balance = address(this).balance;
-    if (balance > 0) {
-        (bool refunded, ) = msg.sender.call{value: balance}("");
-        require(refunded, "Failed to refund LAVA");
-    }
 }
 ```
 
