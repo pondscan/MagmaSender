@@ -15,7 +15,7 @@ Explore MagmaSender with our live demo:
 
 ## Quick Start
 
-Visit our website for detailed instructions on how to use MagmaSender, or check out the `docs` section in this repository.
+Visit our website to easily airdrop tokens or lava.
 
 ## Sample Code
 
