@@ -1,3 +1,3 @@
-Please review the MagmaSender contract/dapp code before use.
+Magmasender is a contract suite for multisending native tokens, erc20 tokens, NFT's and more.
 
-To access the MagamaSender UI, visit: https://pondscan.github.io/MagmaSender
+Please visit magmasender.com for a demo.
